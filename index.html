@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💎 Jewel Tetris 💎</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="theme-galaxy">
+  <canvas id="particles-canvas"></canvas>
+  <div class="wrapper">
+    <aside class="side-panel left-panel">
+      <div class="game-title">💎 JEWEL<br>TETRIS</div>
+      <div class="panel-box">
+        <h3>NEXT</h3>
+        <canvas id="next-canvas" width="120" height="120"></canvas>
+      </div>
+      <div class="panel-box">
+        <h3>SCORE</h3>
+        <div id="score" class="stat-value">0</div>
+      </div>
+      <div class="panel-box">
+        <h3>LEVEL</h3>
+        <div id="level" class="stat-value">1</div>
+      </div>
+      <div class="panel-box">
+        <h3>LINES</h3>
+        <div id="lines" class="stat-value">0</div>
+      </div>
+    </aside>
+    <main class="game-area">
+      <canvas id="game-canvas" width="300" height="600"></canvas>
+      <div id="overlay" class="overlay">
+        <div class="overlay-box">
+          <h1 id="overlay-title">💎 JEWEL TETRIS 💎</h1>
+          <p id="overlay-msg">Choose a theme and press Start!</p>
+          <button id="start-btn" class="btn primary-btn">▶ START GAME</button>
+        </div>
+      </div>
+    </main>
+    <aside class="side-panel right-panel">
+      <div class="panel-box theme-selector">
+        <h3>THEME</h3>
+        <button class="theme-btn active" data-theme="galaxy">🌌 Galaxy</button>
+        <button class="theme-btn" data-theme="ocean">🌊 Ocean</button>
+        <button class="theme-btn" data-theme="candy">🍬 Candy</button>
+      </div>
+      <div class="panel-box">
+        <h3>CONTROLS</h3>
+        <ul class="controls-list">
+          <li><span class="key">◀ ▶</span> Move</li>
+          <li><span class="key">▲</span> Rotate</li>
+          <li><span class="key">▼</span> Soft Drop</li>
+          <li><span class="key">SPC</span> Hard Drop</li>
+          <li><span class="key">P</span> Pause</li>
+        </ul>
+      </div>
+      <div class="panel-box">
+        <h3>HIGH SCORE</h3>
+        <div id="high-score" class="stat-value">0</div>
+      </div>
+      <button id="pause-btn" class="btn">⏸ PAUSE</button>
+      <button id="restart-btn" class="btn">🔄 RESTART</button>
+    </aside>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>
