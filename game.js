@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    JEWEL TETRIS – game.js  (fixed)
    Themes: galaxy (shooting stars) | ocean (bubbles) | candy (cotton candy)
    All pieces drawn as faceted jewel blocks
