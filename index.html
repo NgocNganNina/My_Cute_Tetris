@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>💎 Jewel Tetris 💎</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="theme-galaxy">
+
+  <!-- Background Canvas for Particles / Stars / Bubbles -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Container that scales dynamically so it fits ANY screen without being cut off -->
+  <div id="game-scaler">
+    <div class="main-layout">
+
+      <!-- LEFT PANEL (Score, Stats, Next) -->
+      <aside class="side-panel left-panel">
+        <div class="game-title">💎 JEWEL<br>TETRIS</div>
+
+        <div class="panel-box">
+          <h3>NEXT</h3>
+          <canvas id="next-canvas" width="100" height="100"></canvas>
+        </div>
+
+        <div class="panel-box">
+          <h3>SCORE</h3>
+          <div id="score" class="stat-value">0</div>
+        </div>
+
+        <div class="panel-box">
+          <h3>LEVEL</h3>
+          <div id="level" class="stat-value">1</div>
+        </div>
+
+        <div class="panel-box">
+          <h3>LINES</h3>
+          <div id="lines" class="stat-value">0</div>
+        </div>
+      </aside>
+
+      <!-- CENTER: Game Canvas + Mobile Buttons below -->
+      <main class="center-area">
+        <div class="canvas-wrapper">
+          <canvas id="game-canvas" width="300" height="600"></canvas>
+
+          <!-- Start / Game Over / Pause Overlay -->
+          <div id="overlay" class="overlay">
+            <div class="overlay-box">
+              <h1 id="overlay-title">💎 JEWEL TETRIS</h1>
+              <p id="overlay-msg">Choose theme & press Start!</p>
+              <button id="start-btn" class="btn primary-btn">▶ START GAME</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ON-SCREEN CIRCULAR CONTROLLER (Matches User's Reference Image) -->
+        <div class="controller-container">
+          <div class="dpad-circle">
+            <button class="circle-btn btn-up" id="btn-up" aria-label="Rotate">
+              <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+            </button>
+            <button class="circle-btn btn-left" id="btn-left" aria-label="Move Left">
+              <svg viewBox="0 0 24 24"><path d="M4 12l8-8v5h8v6h-8v5z"/></svg>
+            </button>
+            <button class="circle-btn btn-right" id="btn-right" aria-label="Move Right">
+              <svg viewBox="0 0 24 24"><path d="M20 12l-8-8v5H4v6h8v5z"/></svg>
+            </button>
+            <button class="circle-btn btn-down" id="btn-down" aria-label="Soft Drop">
+              <svg viewBox="0 0 24 24"><path d="M12 20l8-8h-5V4h-6v8H4z"/></svg>
+            </button>
+            <button class="circle-center-btn" id="btn-drop" aria-label="Hard Drop" title="Hard Drop">
+              DROP
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <!-- RIGHT PANEL (Themes, Controls, Buttons) -->
+      <aside class="side-panel right-panel">
+        <div class="panel-box theme-selector">
+          <h3>THEME</h3>
+          <button class="theme-btn active" data-theme="galaxy">🌌 Galaxy</button>
+          <button class="theme-btn" data-theme="ocean">🌊 Ocean</button>
+          <button class="theme-btn" data-theme="candy">🍬 Candy</button>
+        </div>
+
+        <div class="panel-box desktop-controls-box">
+          <h3>KEYBOARD</h3>
+          <ul class="controls-list">
+            <li><span class="key">◀▶</span> Move</li>
+            <li><span class="key">▲</span> Rotate</li>
+            <li><span class="key">▼</span> Soft Drop</li>
+            <li><span class="key">SPC</span> Drop</li>
+            <li><span class="key">P</span> Pause</li>
+          </ul>
+        </div>
+
+        <div class="panel-box">
+          <h3>HIGH SCORE</h3>
+          <div id="high-score" class="stat-value">0</div>
+        </div>
+
+        <div class="action-buttons">
+          <button id="pause-btn" class="btn">⏸ PAUSE</button>
+          <button id="restart-btn" class="btn">🔄 RESTART</button>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

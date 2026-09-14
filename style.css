@@ -1,0 +1,393 @@
+﻿/* ========================================================
+   JEWEL TETRIS – style.css
+   Responsive, Auto-scaling, Circular D-pad buttons
+======================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Fredoka+One&display=swap");
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-touch-callout: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Orbitron", sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.8s ease;
+  position: relative;
+}
+
+/* ══════════════════════════════════════
+   BACKGROUND CANVAS
+══════════════════════════════════════ */
+#particles-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ══════════════════════════════════════
+   AUTO-SCALER WRAPPER
+   Guarantees the entire game fits on screen without cutoffs!
+══════════════════════════════════════ */
+#game-scaler {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center center;
+  transition: transform 0.15s ease-out;
+}
+
+.main-layout {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 16px;
+  padding: 10px;
+}
+
+/* ══════════════════════════════════════
+   THEMES
+══════════════════════════════════════ */
+
+/* Galaxy */
+body.theme-galaxy {
+  background: radial-gradient(ellipse at center, #0d0221 0%, #050014 60%, #000008 100%);
+  color: #e0d0ff;
+}
+body.theme-galaxy .panel-box { background: rgba(50, 0, 100, 0.45); border: 2px solid #9b59ff; }
+body.theme-galaxy .panel-box h3 { color: #c89fff; }
+body.theme-galaxy .stat-value { color: #fff; text-shadow: 0 0 10px #9b59ff; }
+body.theme-galaxy .btn { background: linear-gradient(135deg, #4a00a0, #7b00e0); border: 2px solid #9b59ff; color: #fff; }
+body.theme-galaxy .btn:hover, body.theme-galaxy .btn:active { background: linear-gradient(135deg, #6a00d0, #a020f0); box-shadow: 0 0 15px #a020f0; }
+body.theme-galaxy .theme-btn.active { background: linear-gradient(135deg, #7b00e0, #a020f0); box-shadow: 0 0 12px #a020f0; }
+body.theme-galaxy .game-title { color: #c89fff; text-shadow: 0 0 18px #9b59ff; }
+body.theme-galaxy #game-canvas { border: 3px solid #9b59ff; box-shadow: 0 0 25px #9b59ff, 0 0 50px #5000aa; }
+body.theme-galaxy .overlay-box { background: rgba(10, 0, 40, 0.94); border: 2px solid #9b59ff; }
+body.theme-galaxy .overlay-box h1 { color: #c89fff; text-shadow: 0 0 20px #9b59ff; }
+body.theme-galaxy .key { background: rgba(155, 89, 255, 0.2); border: 1px solid #9b59ff; color: #e0d0ff; }
+
+/* Ocean */
+body.theme-ocean {
+  background: radial-gradient(ellipse at bottom, #001a33 0%, #002244 50%, #001228 100%);
+  color: #c8f0ff;
+}
+body.theme-ocean .panel-box { background: rgba(0, 50, 90, 0.48); border: 2px solid #00b4d8; }
+body.theme-ocean .panel-box h3 { color: #7dd9f0; }
+body.theme-ocean .stat-value { color: #fff; text-shadow: 0 0 10px #00b4d8; }
+body.theme-ocean .btn { background: linear-gradient(135deg, #005577, #0077a8); border: 2px solid #00b4d8; color: #fff; }
+body.theme-ocean .btn:hover, body.theme-ocean .btn:active { background: linear-gradient(135deg, #007799, #00aacc); box-shadow: 0 0 15px #00b4d8; }
+body.theme-ocean .theme-btn.active { background: linear-gradient(135deg, #0077a8, #00b4d8); box-shadow: 0 0 12px #00b4d8; }
+body.theme-ocean .game-title { color: #7dd9f0; text-shadow: 0 0 18px #00b4d8; }
+body.theme-ocean #game-canvas { border: 3px solid #00b4d8; box-shadow: 0 0 25px #00b4d8, 0 0 50px #004466; }
+body.theme-ocean .overlay-box { background: rgba(0, 18, 45, 0.94); border: 2px solid #00b4d8; }
+body.theme-ocean .overlay-box h1 { color: #7dd9f0; text-shadow: 0 0 20px #00b4d8; }
+body.theme-ocean .key { background: rgba(0, 180, 216, 0.2); border: 1px solid #00b4d8; color: #c8f0ff; }
+
+/* Candy */
+body.theme-candy {
+  background: linear-gradient(160deg, #ffb3e6 0%, #ffd6f0 25%, #ffbbf0 50%, #ffc8e8 75%, #ffa0d8 100%);
+  color: #7a0050;
+}
+body.theme-candy::before {
+  content: "";
+  position: fixed; inset: 0;
+  background-image:
+    radial-gradient(ellipse 220px 120px at 15% 25%, rgba(255,255,255,.55) 0%, transparent 70%),
+    radial-gradient(ellipse 180px 100px at 80% 15%, rgba(255,230,250,.55) 0%, transparent 70%),
+    radial-gradient(ellipse 200px 110px at 50% 60%, rgba(255,200,240,.4)  0%, transparent 70%),
+    radial-gradient(ellipse 250px 130px at 30% 80%, rgba(255,255,255,.45) 0%, transparent 70%),
+    radial-gradient(ellipse 160px  90px at 90% 70%, rgba(255,220,250,.45) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+  animation: cloudDrift 20s ease-in-out infinite alternate;
+}
+@keyframes cloudDrift { 0% { transform: translateX(0); } 100% { transform: translateX(30px); } }
+body.theme-candy .panel-box { background: rgba(255, 200, 240, 0.65); border: 2px solid #ff6ec7; }
+body.theme-candy .panel-box h3 { color: #cc0077; }
+body.theme-candy .stat-value { color: #7a0050; text-shadow: 0 0 10px #ff6ec7; }
+body.theme-candy .btn { background: linear-gradient(135deg, #ff6ec7, #ff9de2); border: 2px solid #ff3db3; color: #fff; }
+body.theme-candy .btn:hover, body.theme-candy .btn:active { background: linear-gradient(135deg, #ff3db3, #ff70cc); box-shadow: 0 0 15px #ff6ec7; }
+body.theme-candy .theme-btn.active { background: linear-gradient(135deg, #ff3db3, #ff6ec7); box-shadow: 0 0 12px #ff6ec7; }
+body.theme-candy .game-title { color: #cc0077; font-family: "Fredoka One", sans-serif; text-shadow: 0 0 14px #ff6ec7, 1px 1px 0 #fff; }
+body.theme-candy #game-canvas { border: 3px solid #ff6ec7; box-shadow: 0 0 25px #ff6ec7, 0 0 50px #ff9de2; }
+body.theme-candy .overlay-box { background: rgba(255, 230, 245, 0.95); border: 2px solid #ff6ec7; }
+body.theme-candy .overlay-box h1 { color: #cc0077; text-shadow: 0 0 14px #ff6ec7; font-family: "Fredoka One", sans-serif; }
+body.theme-candy .overlay-box p { color: #aa0060; }
+body.theme-candy .key { background: rgba(255, 110, 199, 0.2); border: 1px solid #ff6ec7; color: #7a0050; }
+
+/* ══════════════════════════════════════
+   SIDE PANELS
+══════════════════════════════════════ */
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 140px;
+  flex-shrink: 0;
+}
+
+.panel-box {
+  border-radius: 14px;
+  padding: 8px 10px;
+  backdrop-filter: blur(8px);
+  transition: background 0.5s, border-color 0.5s;
+}
+
+.panel-box h3 {
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.game-title {
+  font-size: 15px;
+  font-weight: 900;
+  text-align: center;
+  line-height: 1.2;
+  letter-spacing: 1px;
+  padding: 4px 0;
+}
+
+#next-canvas {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Theme selector */
+.theme-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.theme-btn {
+  width: 100%;
+  padding: 6px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background: rgba(255, 255, 255, 0.08);
+  color: inherit;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.theme-btn:active { transform: scale(0.96); }
+
+/* Buttons */
+.btn {
+  width: 100%;
+  padding: 8px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+.btn:active { transform: scale(0.96); }
+.primary-btn {
+  font-size: 15px;
+  padding: 12px 24px;
+  margin-top: 5px;
+}
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Controls list */
+.controls-list {
+  list-style: none;
+  font-size: 9px;
+  line-height: 1.8;
+}
+.controls-list li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.key {
+  display: inline-block;
+  border-radius: 4px;
+  padding: 1px 4px;
+  font-size: 8px;
+  min-width: 24px;
+  text-align: center;
+  font-weight: 700;
+}
+
+/* ══════════════════════════════════════
+   CENTER PLAY AREA
+══════════════════════════════════════ */
+.center-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.canvas-wrapper {
+  position: relative;
+  width: 300px;
+  height: 600px;
+}
+
+#game-canvas {
+  display: block;
+  border-radius: 8px;
+  background: transparent;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.65);
+  border-radius: 8px;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+}
+.overlay.hidden { display: none; }
+
+.overlay-box {
+  border-radius: 16px;
+  padding: 24px 28px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+.overlay-box h1 { font-size: 18px; margin-bottom: 8px; }
+.overlay-box p { font-size: 12px; margin-bottom: 16px; opacity: 0.85; }
+
+/* ══════════════════════════════════════
+   ON-SCREEN CIRCULAR D-PAD CONTROLLER
+   (Exactly matches user's reference image!)
+══════════════════════════════════════ */
+.controller-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.dpad-circle {
+  position: relative;
+  width: 170px;
+  height: 170px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Red Circular Buttons matching reference image */
+.circle-btn {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #e61919;
+  border: 2px solid #ffffff;
+  box-shadow: 0 4px 10px rgba(230, 25, 25, 0.4), inset 0 -3px 6px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.1s ease, background 0.15s ease;
+  touch-action: manipulation;
+}
+
+.circle-btn svg {
+  width: 26px;
+  height: 26px;
+  fill: #ffffff;
+  pointer-events: none;
+}
+
+.circle-btn:active {
+  transform: scale(0.88);
+  background: #b80d0d;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Positions for UP, DOWN, LEFT, RIGHT buttons */
+.btn-up {
+  top: 0;
+  left: 60px;
+}
+.btn-down {
+  bottom: 0;
+  left: 60px;
+}
+.btn-left {
+  left: 0;
+  top: 60px;
+}
+.btn-right {
+  right: 0;
+  top: 60px;
+}
+
+/* Center Hard Drop Button */
+.circle-center-btn {
+  position: absolute;
+  top: 60px;
+  left: 60px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px dashed rgba(255, 255, 255, 0.4);
+  color: #fff;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.1s, background 0.15s;
+  touch-action: manipulation;
+}
+.circle-center-btn:active {
+  transform: scale(0.88);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* ══════════════════════════════════════
+   MOBILE / NARROW SCREEN ADJUSTMENTS
+══════════════════════════════════════ */
+@media (max-width: 650px) {
+  .desktop-controls-box {
+    display: none;
+  }
+}
